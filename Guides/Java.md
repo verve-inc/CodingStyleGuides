@@ -1794,27 +1794,152 @@ public String getFName() {
 
 ### ❏ 抽象メソッド
 
-### ❏ 呼び出し
+**規約**
+
+抽象メソッドを定義する場合は、アクセス修飾子の後に`abstract`を記述する。（※言語仕様）
 
 > ## 関数
 
-### ❏ ローカル
-
-### ❏ グローバル
-
-### ❏ ラムダ式(無名関数/クロージャ)
+※言語仕様にない。
 
 > ## 名前空間
 
+※Javaコーディング規約では、パッケージ名について記述する。
+
 ### ❏ 定義
 
+パッケージ名を定義する場合は、クラスファイルの１行目に以下のように記述する。（※言語仕様）
+
+```Java
+package {パッケージ名};
+```
+
 ### ❏ 利用
+
+異なるパッケージに定義されている型にアクセスする場合、ドット演算子`.`を使用する。（※言語仕様）
+
+```Java
+public class SampleClass {
+
+    public void doSomething() {
+
+        Object[] obj = new Object[] {"b", "c", "a"};
+        java.util.Arrays.sort(obj);
+
+        System.out.println(java.util.Arrays.toString(obj));  // [a, b, c] と表示される
+    }
+}
+```
+
+クラスファイル内でパッケージ名の指定を省略する場合、`import`ディレクティブを使用する。（※言語仕様）
+
+```Java
+import java.util.Arrays;
+
+public class SampleClass {
+
+    public void doSomething() {
+
+        Object[] obj = new Object[] {"b", "c", "a"};
+        Arrays.sort(obj);
+
+        System.out.println(Arrays.toString(obj));  // [a, b, c] と表示される
+    }
+}
+```
+
+クラスファイル内で異なるパッケージの型に定義されたstaticメソッドを型名を省略して使用する場合、
+`import static`ディレクティブを使用する。（※言語仕様）
+
+```Java
+
+import static java.util.Arrays.sort;
+
+import java.util.Arrays;
+
+public class SampleClass {
+
+    public void doSomething() {
+
+        Object[] obj = new Object[] {"b", "c", "a"};
+        sort(obj);
+
+        System.out.println(Arrays.toString(obj));  // [a, b, c] と表示される
+    }
+}
+```
+
+**規約**
+
+import文およびimport static文に、ワイルドカードを使用してはならない。
+
+**理由**
+
+ワイルドカードを使用して型またはメソッドをインポートすると、意図していない型やメソッドを
+使用してしまう可能性があるため。
+
+**良い例**
+
+※使用する方だけをインポートしている。
+
+```Java
+import java.util.List;
+import java.util.ArrayList;
+```
+
+**悪い例**
+
+※使用していない型も、全てインポートしてしまう。
+
+```Java
+import java.util.*;
+```
+
+**Tips**
+
+Eclipseで開発している場合、以下のショートカットキーで自動的にインポート文を成形できる。
+　Windows : `alt` + `shift` + `o`
+　Mac : `command` + `shift` + `o`
 
 > ## コメント
 
 ### ❏ ファイルコメント
 
+**規約**
+
+ファイルコメントは、ファイルの先頭にコメント記述子`/*  */`を使って記述する。
+
+**例**
+
+```java
+/*
+ * サンプルコメント。
+ */
+package jp.ne.sample;
+
+public class SampleClass {
+    … 中略
+}
+```
+
 ### ❏ クラスコメント
+
+**規約1**
+
+クラスコメントは、クラスの宣言の直前にコメント記述子`/** */`を使って記述する。
+
+**例**
+
+```java
+package jp.ne.sample;
+
+/**
+ * サンプルクラス。
+ */
+public class SampleClass {
+    … 中略
+}
+```
 
 ### ❏ メソッドコメント
 
