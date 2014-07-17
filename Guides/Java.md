@@ -1703,23 +1703,204 @@ public class OtherClass {
 
 ### ❏ 定義
 
+**規約1**
+
+メソッド名は頭文字が小文字のキャメルケースで定義する。
+
+**理由**
+
+OracleのJava言語コーディング規約に則るため。
+
+**よい例**
+
+```java
+public void doSomething() {
+    ...
+}
+```
+
+**悪い例**
+
+```java
+public void do_something() {
+    ...
+}
+```
+
+**規約2**
+
+開き波括弧`{`はメソッド定義と同じ行に、半角スペース１つを空けて記述する。
+
+**理由**
+
+書式を統一することで、他人が読みやすいコードにするため。
+
+**よい例**
+
+```java
+public void doSomething() {
+    ...
+}
+```
+
+**悪い例**
+
+```java
+public void doSomething(){
+    ...
+}
+
+public void doSomething2()
+{
+    ...
+}
+```
+
+**規約3**
+
+メソッド名の英単語は省略しない。
+
+**理由**
+
+他人が読んで理解しやすいコードにするため。
+
+**よい例**
+
+```java
+public String getFirstName() {
+    ...
+}
+```
+
+**悪い例**
+
+```java
+public String getFName() {
+    ...
+}
+```
+
+※ただし、省略形が一般に普及している単語は例外とする。
+　　例: URL, HTTP, API, PC, …
+
+**規約4**
+
+１つのメソッドの行数は、空白行・コメント行も含めて30行以下を推奨とし、５０行を超えてはならない。
+１つのメソッドの行数が50行を超える場合は、メソッドを分割するなどして対応する。
+
+**理由**
+
+行数が多くなると、そのメソッドが何をしているのかを理解することが難しくなるため。
+また、長過ぎるメソッドは本来複数のメソッドに分割できる複数の役割を負っていることが多い。
+
 ### ❏ 抽象メソッド
 
-### ❏ 呼び出し
+**規約**
+
+抽象メソッドを定義する場合は、アクセス修飾子の後に`abstract`を記述する。（※言語仕様）
 
 > ## 関数
 
-### ❏ ローカル
-
-### ❏ グローバル
-
-### ❏ ラムダ式(無名関数/クロージャ)
+※言語仕様にない。
 
 > ## 名前空間
 
+※Javaコーディング規約では、パッケージ名について記述する。
+
 ### ❏ 定義
 
+パッケージ名を定義する場合は、クラスファイルの１行目に以下のように記述する。（※言語仕様）
+
+```Java
+package {パッケージ名};
+```
+
 ### ❏ 利用
+
+異なるパッケージに定義されている型にアクセスする場合、ドット演算子`.`を使用する。（※言語仕様）
+
+```Java
+public class SampleClass {
+
+    public void doSomething() {
+
+        Object[] obj = new Object[] {"b", "c", "a"};
+        java.util.Arrays.sort(obj);
+
+        System.out.println(java.util.Arrays.toString(obj));  // [a, b, c] と表示される
+    }
+}
+```
+
+クラスファイル内でパッケージ名の指定を省略する場合、`import`ディレクティブを使用する。（※言語仕様）
+
+```Java
+import java.util.Arrays;
+
+public class SampleClass {
+
+    public void doSomething() {
+
+        Object[] obj = new Object[] {"b", "c", "a"};
+        Arrays.sort(obj);
+
+        System.out.println(Arrays.toString(obj));  // [a, b, c] と表示される
+    }
+}
+```
+
+クラスファイル内で異なるパッケージの型に定義されたstaticメソッドを型名を省略して使用する場合、
+`import static`ディレクティブを使用する。（※言語仕様）
+
+```Java
+
+import static java.util.Arrays.sort;
+
+import java.util.Arrays;
+
+public class SampleClass {
+
+    public void doSomething() {
+
+        Object[] obj = new Object[] {"b", "c", "a"};
+        sort(obj);
+
+        System.out.println(Arrays.toString(obj));  // [a, b, c] と表示される
+    }
+}
+```
+
+**規約**
+
+import文およびimport static文に、ワイルドカードを使用してはならない。
+
+**理由**
+
+ワイルドカードを使用して型またはメソッドをインポートすると、意図していない型やメソッドを
+使用してしまう可能性があるため。
+
+**良い例**
+
+※使用する方だけをインポートしている。
+
+```Java
+import java.util.List;
+import java.util.ArrayList;
+```
+
+**悪い例**
+
+※使用していない型も、全てインポートしてしまう。
+
+```Java
+import java.util.*;
+```
+
+**Tips**
+
+Eclipseで開発している場合、以下のショートカットキーで自動的にインポート文を成形できる。
+　Windows : `alt` + `shift` + `o`
+　Mac : `command` + `shift` + `o`
 
 > ## コメント
 
