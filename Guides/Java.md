@@ -1969,6 +1969,75 @@ public class SampleClass {
 
 ### ❏ メソッドコメント
 
+**規約1**
+
+メソッドコメントは、メソッドの宣言の直前にコメント記述子`/** */`を使って記述する。
+
+**例**
+
+```java
+/**
+ * サンプルメソッド。
+ */
+public void doSomething() {
+    … 中略
+}
+```
+
+**規約2**
+
+メソッドコメントには、原則以下を記述する。
+
+```java
+/**
+ * 一行目にメソッドの概要、必須。
+ * ２行目以降にメソッドの詳細。getter、setterのように詳細を記述するまでもないものについては、省略可能。
+ * 
+ * @params param1 引数の説明。引数がないメソッドは不要。
+ * @params ...
+ * @return 戻り値の説明。戻り値がないメソッドは不要。
+ * @throws [例外の型名1] 何をしたら/何が起きたらこの例外が発生するかを説明する。
+ *     throws句を記述する必要のないRuntimeException についても記述する。
+ *     例外を投げないメソッドは不要
+ * @throws [例外の型名2] ...
+ */
+public String doSomething(int param1, int ...) throws Exception {
+    ...（中略）
+}
+```
+
+**良い例**
+
+```java
+/**
+ * 引数name が、猫の品種であるかどうかを判定する。
+ * 判定基準は、ウィキペディアの「http://ja.wikipedia.org/wiki/猫の品種の一覧」をもとにしている。
+ * 
+ * @params name 猫の品種。カタカナの半角・全角は区別しないが、ひらがなや漢字が混ざると間違った結果を返す場合がある。
+ * @return 引数nameが猫の品種である場合、true。
+ * @throws NullPointerException 引数nameがnullの場合。
+ */
+public boolean isCatBreedsName(String name) {
+    ...（中略）
+}
+```
+
+**悪い例**
+
+※説明が不十分であったり、そもそも書かれていなかったりするため、この説明文だけではメソッドの使い方が分からない。
+
+```java
+/**
+ * 引数nameが、猫の品種であるかどうかを判定する。
+ * 
+ * @params name 猫の品種。
+ * @return 
+ */
+public boolean isCatBreedsName(String name) {
+    ...（中略）
+}
+```
+
 ### ❏ 関数コメント
 
 ### ❏ 文中コメント
