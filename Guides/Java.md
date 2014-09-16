@@ -1020,6 +1020,72 @@ try {
 }
 ```
 
+### ❏ 総称型 (Generic type)
+
+総称型 (Generic type) とは、データの型をパラメータとして扱う機能のことを指す。
+Java言語ではJDK1.5から言語仕様に取り入れられた。
+
+**規約1**
+
+Java言語では、総称型の型パラメータは`<>`で指定する。（言語仕様）
+
+**例**
+
+```java
+public class Container<T> {
+    private T content;
+
+    public void setContent(T content) {
+        this.content = content;
+    }
+
+    public T getContent() {
+        return this.content;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Container<String> container = new Container<String>();
+        container.setContent("Hello World!");
+
+        String message = container.getContent();
+        System.out.println(message);  // Hello World! と表示される。
+    }
+}
+```
+
+**規約2**
+
+JDK1.5以降では、新規に追加・修正するコードで未加工型 (Raw type) を使用してはならない。
+
+未加工型とは、総称型として定義されているクラスを型パラメータを指定せずに使用したものを言う。
+未加工型を使用するとコンパイル時に型検査ができず、実行時例外が発生する可能性があるため。
+
+**良い例**
+
+List nicknames = new ArrayList();
+nicknames.add("Mike");
+nicknames.add(0);    // コンパイル時にエラーになる
+nicknames.add("Jane");
+
+for (String nickname : nicknames) {
+    System.out.println("ニックネームは" + nickname + "です。");
+}
+
+**悪い例**
+
+List nicknames = new ArrayList();
+nicknames.add("Mike");
+nicknames.add(0);
+nicknames.add("Jane");
+
+for (Object o : nicknames) {
+    String nickname = (String) o;  // 2つ目の要素でClassCastExceptionが発生する。
+    System.out.println("ニックネームは" + nickname + "です。");
+}
+
+
 > ## 変数
 
 ### ❏ ローカル変数
