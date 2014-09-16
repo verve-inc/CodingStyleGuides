@@ -1064,7 +1064,7 @@ JDK1.5以降では、新規に追加・修正するコードで未加工型 (Raw
 
 **良い例**
 
-List nicknames = new ArrayList();
+List<String> nicknames = new ArrayList<String>();
 nicknames.add("Mike");
 nicknames.add(0);    // コンパイル時にエラーになる
 nicknames.add("Jane");
