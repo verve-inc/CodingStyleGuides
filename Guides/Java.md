@@ -73,7 +73,7 @@ char c = 'a';
 String s = "bbb";
 ```
 
-**規約**
+**規約1**
 
 文字および文字列をnew してはならない。
 
@@ -94,6 +94,35 @@ char initial = 'H';
 ```java
 String title = new String("Hamlet");
 char initial = new Character('H');
+```
+
+**規約2**
+
+文字列変数と文字列リテラルをequals メソッドで比較する際は、文字列リテラルを左側に配置すること。
+
+**理由**
+
+文字列変数を左側に置いてequals メソッドを呼び出す場合、その変数がnull だった場合に備えて事前にnull チェックを行う必要がある。
+一方、文字列リテラルを左側に配置すればnull チェックをする必要がなくなる。
+
+**良い例**
+
+```java
+String title = null;
+
+if ("Hamlet".equals(title)) { // nullチェックする必要がない
+    ...（中略）
+}
+```
+
+**悪い例**
+
+```java
+String title = null;
+
+if (title.equals("Hamlet")) { // NullPointerException が発生する！
+    ...（中略）
+}
 ```
 
 ### ❏ 論理値
