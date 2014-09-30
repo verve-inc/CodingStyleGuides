@@ -794,7 +794,7 @@ break;
 
 **規約2**
 
-意図的にbreak句を省略する場合は、コメントで"// No break"を記述しておく。
+意図的にbreak句を省略する場合は、コメントで` // fall through`と記述しておく。
 
 **理由**
 
@@ -806,7 +806,7 @@ break;
 switch (i) {
     case 0:
         text = "0です。";
-        // No break
+        // fall through
     case 1:
         text += "1です。";
         break;
