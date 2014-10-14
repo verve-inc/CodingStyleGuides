@@ -75,7 +75,6 @@
     <module name="VisibilityModifier"/>
     <module name="ArrayTypeStyle"/>
     <module name="UpperEll"/>
-    <module name="EnumValueNameCheck"/>
     <module name="MissingOverride">
       <property name="severity" value="error"/>
     </module>
