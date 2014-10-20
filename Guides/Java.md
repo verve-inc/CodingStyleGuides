@@ -73,7 +73,7 @@ char c = 'a';
 String s = "bbb";
 ```
 
-**規約**
+**規約1**
 
 文字および文字列をnew してはならない。
 
@@ -94,6 +94,35 @@ char initial = 'H';
 ```java
 String title = new String("Hamlet");
 char initial = new Character('H');
+```
+
+**規約2**
+
+文字列変数と文字列リテラルをequals メソッドで比較する際は、文字列リテラルを左側に配置すること。
+
+**理由**
+
+文字列変数を左側に置いてequals メソッドを呼び出す場合、その変数がnull だった場合に備えて事前にnull チェックを行う必要がある。
+一方、文字列リテラルを左側に配置すればnull チェックをする必要がなくなる。
+
+**良い例**
+
+```java
+String title = null;
+
+if ("Hamlet".equals(title)) { // nullチェックする必要がない
+    ...（中略）
+}
+```
+
+**悪い例**
+
+```java
+String title = null;
+
+if (title.equals("Hamlet")) { // NullPointerException が発生する！
+    ...（中略）
+}
 ```
 
 ### ❏ 論理値
@@ -562,7 +591,7 @@ private static int calculateCampaignPrice(Map<String, Object> goods) {
 
 ### ❏ if文
 
-**規約**
+**規約1**
 
 else句、else if句は、閉じ波括弧"}"の後にスペース１文字を空けて記述する。
 
@@ -598,6 +627,32 @@ if (i == 0) {
 }
 else {
     s = "iは0以外です。";
+}
+```
+
+**規約2**
+
+空のブロックを記述してはならない。
+
+**理由**
+
+ソースコードが冗長になる上、可読性が損なわれるため。
+
+**良い例**
+
+```Java
+if (i == 0) {
+    s = "iは0です。";
+}
+```
+
+**悪い例**
+
+```Java
+if (i == 0) {
+    s = "iは0です。";
+} else {
+
 }
 ```
 
@@ -739,7 +794,7 @@ break;
 
 **規約2**
 
-意図的にbreak句を省略する場合は、コメントで"// No break"を記述しておく。
+意図的にbreak句を省略する場合は、コメントで` // fall through`と記述しておく。
 
 **理由**
 
@@ -751,7 +806,7 @@ break;
 switch (i) {
     case 0:
         text = "0です。";
-        // No break
+        // fall through
     case 1:
         text += "1です。";
         break;
@@ -993,6 +1048,72 @@ try {
     conn.close();  // ここでNullPointerExceptionが発生
 }
 ```
+
+### ❏ 総称型 (Generic type)
+
+総称型 (Generic type) とは、データの型をパラメータとして扱う機能のことを指す。
+Java言語ではJDK1.5から言語仕様に取り入れられた。
+
+**規約1**
+
+Java言語では、総称型の型パラメータは`<>`で指定する。（言語仕様）
+
+**例**
+
+```java
+public class Container<T> {
+    private T content;
+
+    public void setContent(T content) {
+        this.content = content;
+    }
+
+    public T getContent() {
+        return this.content;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Container<String> container = new Container<String>();
+        container.setContent("Hello World!");
+
+        String message = container.getContent();
+        System.out.println(message);  // Hello World! と表示される。
+    }
+}
+```
+
+**規約2**
+
+JDK1.5以降では、新規に追加・修正するコードで未加工型 (Raw type) を使用してはならない。
+
+未加工型とは、総称型として定義されているクラスを型パラメータを指定せずに使用したものを言う。
+未加工型を使用するとコンパイル時に型検査ができず、実行時例外が発生する可能性があるため。
+
+**良い例**
+
+List<String> nicknames = new ArrayList<String>();
+nicknames.add("Mike");
+nicknames.add(0);    // コンパイル時にエラーになる
+nicknames.add("Jane");
+
+for (String nickname : nicknames) {
+    System.out.println("ニックネームは" + nickname + "です。");
+}
+
+**悪い例**
+
+List nicknames = new ArrayList();
+nicknames.add("Mike");
+nicknames.add(0);
+nicknames.add("Jane");
+
+for (Object o : nicknames) {
+    String nickname = (String) o;  // 2つ目の要素でClassCastExceptionが発生する。
+    System.out.println("ニックネームは" + nickname + "です。");
+}
+
 
 > ## 変数
 
@@ -1785,7 +1906,7 @@ public String getFName() {
 
 **規約4**
 
-１つのメソッドの行数は、空白行・コメント行も含めて30行以下を推奨とし、５０行を超えてはならない。
+１つのメソッドの行数は、空白行・コメント行も含めて30行以下を推奨とし、50行を超えてはならない。
 １つのメソッドの行数が50行を超える場合は、メソッドを分割するなどして対応する。
 
 **理由**
@@ -1906,18 +2027,174 @@ Eclipseで開発している場合、以下のショートカットキーで自�
 
 ### ❏ ファイルコメント
 
+**規約**
+
+ファイルコメントは、ファイルの先頭にコメント記述子`/*  */`を使って記述する。
+
+**例**
+
+```java
+/*
+ * サンプルコメント。
+ */
+package jp.ne.sample;
+
+public class SampleClass {
+    … 中略
+}
+```
+
 ### ❏ クラスコメント
+
+**規約1**
+
+クラスコメントは、クラスの宣言の直前にコメント記述子`/** */`を使って記述する。
+
+**例**
+
+```java
+package jp.ne.sample;
+
+/**
+ * サンプルクラス。
+ */
+public class SampleClass {
+    … 中略
+}
+```
 
 ### ❏ メソッドコメント
 
+**規約1**
+
+メソッドコメントは、メソッドの宣言の直前にコメント記述子`/** */`を使って記述する。
+
+**例**
+
+```java
+/**
+ * サンプルメソッド。
+ */
+public void doSomething() {
+    … 中略
+}
+```
+
+**規約2**
+
+メソッドコメントには、原則以下を記述する。
+
+```java
+/**
+ * 一行目にメソッドの概要、必須。
+ * ２行目以降にメソッドの詳細。getter、setterのように詳細を記述するまでもないものについては、省略可能。
+ * 
+ * @params param1 引数の説明。引数がないメソッドは不要。
+ * @params ...
+ * @return 戻り値の説明。戻り値がないメソッドは不要。
+ * @throws [例外の型名1] 何をしたら/何が起きたらこの例外が発生するかを説明する。
+ *     throws句を記述する必要のないRuntimeException についても記述する。
+ *     例外を投げないメソッドは不要
+ * @throws [例外の型名2] ...
+ */
+public String doSomething(int param1, int ...) throws Exception {
+    ...（中略）
+}
+```
+
+**良い例**
+
+```java
+/**
+ * 引数name が、猫の品種であるかどうかを判定する。
+ * 判定基準は、ウィキペディアの「http://ja.wikipedia.org/wiki/猫の品種の一覧」をもとにしている。
+ * 
+ * @params name 猫の品種。カタカナの半角・全角は区別しないが、ひらがなや漢字が混ざると間違った結果を返す場合がある。
+ * @return 引数nameが猫の品種である場合、true。
+ * @throws NullPointerException 引数nameがnullの場合。
+ */
+public boolean isCatBreedsName(String name) {
+    ...（中略）
+}
+```
+
+**悪い例**
+
+※説明が不十分であったり、そもそも書かれていなかったりするため、この説明文だけではメソッドの使い方が分からない。
+
+```java
+/**
+ * 引数nameが、猫の品種であるかどうかを判定する。
+ * 
+ * @params name 猫の品種。
+ * @return 
+ */
+public boolean isCatBreedsName(String name) {
+    ...（中略）
+}
+```
+
+**規約3**
+
+全てのメソッドにメソッドコメントを記述する。
+
+**理由**
+
+メソッドコメントは、作成したメソッドを（未来の自分を含めた）別の開発者が再利用する際の助けとするために記述するため。
+
+**例外**
+
+抽象メソッドをオーバーライドする場合、抽象メソッド側に記載されたコメントの他に記載すべき内容がなければ`@Override`アノテーションを付けるだけでかまわない。
+
 ### ❏ 関数コメント
 
+Javaに関数はないため、割愛する。
+
 ### ❏ 文中コメント
+
+**規約1**
+
+文中コメントは、コメント記述子`//`を使って記述する。
+
+**例**
+
+```Java
+// サンプルコメント
+String firstName = "John";
+```
+
+**規約2**
+
+文中コメントに修正者、修正日などを書いてはならない。
+
+**理由**
+
+そのような情報はバージョン管理システムで管理すべきで、ソースコード内に記述するとソースファイルが冗長になり、可読性が損なわれるため。
 
 > ## 特殊文字列
 
 ### ❏ コマンド呼び出し
 
+jdk1.5以降では、以下2通りの方法で外部コマンドを実行することができる。
+
+**方法1**
+
+```Java
+Runtime r = Runtime.getRuntime();
+Process p = r.exec("notepad.exe");
+```
+
+**方法2**
+
+```Java
+ProcessBuilder pb = new ProcessBuilder("notepad.exe");
+Process p = pb.start();
+```
+
 > ## ファイル
 
 ### ❏ ファイル名
+
+**規約**
+
+ソースファイルのファイル名は、`クラス名 + .java`とする。（言語仕様）
