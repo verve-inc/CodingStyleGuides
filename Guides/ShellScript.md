@@ -351,25 +351,22 @@ readonly BACKUP_DIR="/backup"
 
 > ## 関数<a name="function"></a>[【top】](#top)
 
-### ローカル<a name="function1"></a>[【top】](#top)
 
-### グローバル<a name="function2"></a>[【top】](#top)
+### ❏ 定義<a name="function1"></a>[【top】](#top)
 
-## コメント
+- 関数名はすべて小文字で、単語のつなぎ目は「_ 」にする
 
-### ファイルコメント
+**良い例**
+```bash
+mysql_backup () {
+  処理
+}
+````
 
+**悪い例**
+```bash
+MYSQLBACKUP () {
+  処理
+}
+````
 
-### 関数コメント
-
-### 文中コメント
-
-
-## 特殊文字列
-
-### コマンド呼び出し
-
-
-## ファイル
-
-### ファイル名
