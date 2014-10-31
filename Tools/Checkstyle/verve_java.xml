@@ -18,7 +18,10 @@
       <property name="suppressLoadErrors" value="true"/>
     </module>
     <module name="JavadocType"/>
-    <module name="JavadocStyle"/>
+    <module name="JavadocStyle">
+      <property name="endOfSentenceFormat" value="([.?!。？！][ \t\n\r\f&lt;])|([.?!。？！]$)"/>
+      <message key="javadoc.noperiod" value="最初の一文はピリオドまたは句点で終わらなければなりません。"/>
+    </module>
     <module name="ConstantName"/>
     <module name="LocalFinalVariableName"/>
     <module name="LocalVariableName"/>
