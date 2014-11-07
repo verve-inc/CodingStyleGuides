@@ -9,7 +9,7 @@ git clone https://github.com/verve-inc/CodingStyleGuides
 
   
   
-**2,Ecripseのウィンドウ->設定を選択する。**  
+**2,Eclipseのウィンドウ->設定を選択する。**  
 Eclipseを起動し、ウィンドウタブから設定ダイアログを開く。    
   
   
