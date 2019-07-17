@@ -35,7 +35,7 @@
     <module name="RedundantImport"/>
     <module name="UnusedImports"/>
     <module name="LineLength">
-      <property name="max" value="100"/>
+      <property name="max" value="120"/>
     </module>
     <module name="MethodParamPad"/>
     <module name="NoWhitespaceAfter">
@@ -63,6 +63,7 @@
     <module name="MagicNumber">
       <property name="tokens" value="NUM_DOUBLE, NUM_FLOAT"/>
       <property name="ignoreNumbers" value="0, 0.5, 1, 12, 23, 31, 59"/>
+      <property name="ignoreFieldDeclaration" value="true"/>
       <property name="ignoreAnnotation" value="true"/>
     </module>
     <module name="MissingSwitchDefault"/>
